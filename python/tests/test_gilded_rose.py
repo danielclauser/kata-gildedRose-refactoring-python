@@ -63,7 +63,7 @@ def test_validate_inventory1_after_30_days(
     mock_gilded_rose_inventory1, id_item, sellin, quality
 ):
     for _ in range(0, 30):
-        mock_gilded_rose_inventory1.update_quality()
+        mock_gilded_rose_inventory1.run_item_day_passed_event()
     assert mock_gilded_rose_inventory1.items[id_item].sell_in == sellin
     assert mock_gilded_rose_inventory1.items[id_item].quality == quality
 
@@ -71,7 +71,7 @@ def test_validate_inventory1_after_30_days(
 def test_foo():
     items = [Item("foo", 0, 0)]
     gilded_rose = GildedRose(items)
-    gilded_rose.update_quality()
+    gilded_rose.run_item_day_passed_event()
     assert items[0].name == "foo"
     assert items[0].quality == 0
     assert items[0].sell_in == -1
