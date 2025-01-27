@@ -11,6 +11,7 @@ class Item:
     quality_no_degrade: bool = False
     quality_enhanced_near_expiration: bool = False
     quality_sell_in_locked: bool = False
+    is_expired: bool = False
 
     def __init__(self, name: str, sell_in: int, quality: int) -> None:
         self.name = name
@@ -31,6 +32,11 @@ class Item:
             or self.quality_sell_in_locked
         ):
             self.quality_no_degrade = True
+
+    def check_is_expired(self) -> bool:
+        if self.sell_in < 0:
+            self.is_expired = True
+        return self.is_expired
 
     def __repr__(self) -> None:
         return f"{self.name}, {self.sell_in}, {self.quality}"
@@ -68,5 +74,6 @@ class GildedRose:
         for item in self.items:
             self._item_update_quality(item)
             self._item_update_sell_in(item)
-            if item.sell_in < 0:
+            item.check_is_expired()
+            if item.is_expired:
                 self._item_is_expired(item)
