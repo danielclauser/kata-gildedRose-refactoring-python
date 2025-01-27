@@ -48,8 +48,8 @@ class GildedRose:
                     item.quality = item.quality + 1
                 if item.sell_in < 6 and item.quality < 50:
                     item.quality = item.quality + 1
-    
-    def update_quality(self) -> None:
+
+    def run_item_day_passed_event(self) -> None:
         for item in self.items:
             self._item_update_quality(item)
             self._item_update_sell_in(item)
