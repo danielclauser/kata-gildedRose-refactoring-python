@@ -6,6 +6,7 @@ class Item:
     QUALITY_SELL_IN_LOCKED: set[str] = {"Sulfuras, Hand of Ragnaros"}
     name: str
     sell_in: int
+    sell_in_variation_units:int = -1
     quality: int
     quality_up_on_degrade: bool = False
     quality_no_degrade: bool = False
@@ -60,18 +61,18 @@ class GildedRose:
 
     def _item_update_sell_in(self, item: Item) -> None:
         if not item.quality_sell_in_locked:
-            item.sell_in -= 1
+            item.sell_in += item.sell_in_variation_units
 
     def _item_update_quality(self, item: Item) -> None:
         if not item.quality_no_degrade:
             if item.quality > 0:
                 item.quality += item.quality_variaton_units
-        elif item.quality < 50:
+        elif item.quality < self.MAX_ITEM_QUALITY:
             item.quality += item.quality_variaton_units
             if item.quality_enhanced_near_expiration:
-                if item.sell_in < 11 and item.quality < 50:
+                if item.sell_in < 11 and item.quality < self.MAX_ITEM_QUALITY:
                     item.quality += item.quality_variaton_units
-                if item.sell_in < 6 and item.quality < 50:
+                if item.sell_in < 6 and item.quality < self.MAX_ITEM_QUALITY:
                     item.quality += item.quality_variaton_units
 
     def run_items_day_passed_event(self) -> None:
