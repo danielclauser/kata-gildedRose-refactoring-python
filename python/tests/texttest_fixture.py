@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-from __future__ import print_function
-
-from src.gilded_rose.gilded_rose import *
+from src.gilded_rose.gilded_rose import GildedRose, Item
 
 if __name__ == "__main__":
     print("OMGHAI!")
@@ -23,7 +20,7 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         days = int(sys.argv[1]) + 1
     for day in range(days):
-        print("-------- day %s --------" % day)
+        print(f"-------- day {day} --------")
         print("name, sellIn, quality")
         for item in items:
             print(item)

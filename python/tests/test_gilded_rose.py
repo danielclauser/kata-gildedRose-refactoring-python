@@ -1,10 +1,10 @@
 import pytest
-import sys
-from src.gilded_rose.gilded_rose import Item, GildedRose
+
+from src.gilded_rose.gilded_rose import GildedRose, Item
 
 
 @pytest.fixture
-def mock_inventory1_items()->list[Item]:
+def mock_inventory1_items() -> list[Item]:
     items = [
         Item(name="+5 Dexterity Vest", sell_in=10, quality=20),
         Item(name="Aged Brie", sell_in=2, quality=0),
@@ -20,52 +20,58 @@ def mock_inventory1_items()->list[Item]:
 
 
 @pytest.fixture
-def mock_gilded_rose_inventory1(mock_inventory1_items)->GildedRose:
+def mock_gilded_rose_inventory1(mock_inventory1_items) -> GildedRose:
     return GildedRose(mock_inventory1_items)
 
 
-@pytest.mark.parametrize("id_item, sellin, quality", 
-                         [(0, 10, 20),
-                          (1, 2, 0),
-                          (2, 5, 7),
-                          (3, 0, 80),
-                          (4, -1, 80),
-                          (5, 15, 20),
-                          (6, 10, 49),
-                          (7, 5, 49),
-                          (8, 3, 6),
-                          ])
+@pytest.mark.parametrize(
+    "id_item, sellin, quality",
+    [
+        (0, 10, 20),
+        (1, 2, 0),
+        (2, 5, 7),
+        (3, 0, 80),
+        (4, -1, 80),
+        (5, 15, 20),
+        (6, 10, 49),
+        (7, 5, 49),
+        (8, 3, 6),
+    ],
+)
 def test_validate_inventory1_day_0(
     mock_gilded_rose_inventory1, id_item, sellin, quality
 ):
     assert mock_gilded_rose_inventory1.items[id_item].sell_in == sellin
     assert mock_gilded_rose_inventory1.items[id_item].quality == quality
 
-@pytest.mark.parametrize("id_item, sellin, quality", 
-                         [(0, -20, 0),
-                          (1, -28, 50),
-                          (2, -25, 0),
-                          (3, 0, 80),
-                          (4, -1, 80),
-                          (5, -15, 0),
-                          (6, -20, 0),
-                          (7, -25, 0),
-                          (8, -27, 0),
-                          ])
+
+@pytest.mark.parametrize(
+    "id_item, sellin, quality",
+    [
+        (0, -20, 0),
+        (1, -28, 50),
+        (2, -25, 0),
+        (3, 0, 80),
+        (4, -1, 80),
+        (5, -15, 0),
+        (6, -20, 0),
+        (7, -25, 0),
+        (8, -27, 0),
+    ],
+)
 def test_validate_inventory1_after_30_days(
     mock_gilded_rose_inventory1, id_item, sellin, quality
 ):
-    for i in range(0, 30):
+    for _ in range(0, 30):
         mock_gilded_rose_inventory1.update_quality()
     assert mock_gilded_rose_inventory1.items[id_item].sell_in == sellin
     assert mock_gilded_rose_inventory1.items[id_item].quality == quality
-
 
 
 def test_foo():
     items = [Item("foo", 0, 0)]
     gilded_rose = GildedRose(items)
     gilded_rose.update_quality()
-    assert "foo" == items[0].name
-    assert 0 == items[0].quality
-    assert -1 == items[0].sell_in
+    assert items[0].name == "foo"
+    assert items[0].quality == 0
+    assert items[0].sell_in == -1
