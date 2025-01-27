@@ -1,47 +1,64 @@
 class Item:
+    ITEMS_QUALITY_ONLY_UP_ON_DEGRADE: set[str] = {"Aged Brie"}
+    ITEMS_LEGENDARY: set[str] = {"Sulfuras, Hand of Ragnaros"}
+    ITEMS_QUALITY_ENHANCED_ON_DEGRADE: set[str] = {
+        "Backstage passes to a TAFKAL80ETC concert"
+    }
+    name: str
+    sell_in: int
+    quality: int
+    quality_up_on_degrade: bool = False
+    quality_no_degrade: bool = False
+    quality_enhanced_near_expiration: bool = False
+    quality_sell_in_locked: bool = False
+
     def __init__(self, name: str, sell_in: int, quality: int) -> None:
         self.name = name
+        self._set_info_item_by_name()
         self.sell_in = sell_in
         self.quality = quality
+
+    def _set_info_item_by_name(self):
+        if self.name in self.ITEMS_QUALITY_ONLY_UP_ON_DEGRADE:
+            self.quality_up_on_degrade = True
+        if self.name in self.ITEMS_LEGENDARY:
+            self.quality_sell_in_locked = True
+        if self.name in self.ITEMS_QUALITY_ENHANCED_ON_DEGRADE:
+            self.quality_enhanced_near_expiration = True
+        if (
+            self.quality_enhanced_near_expiration
+            or self.quality_up_on_degrade
+            or self.quality_sell_in_locked
+        ):
+            self.quality_no_degrade = True
 
     def __repr__(self) -> None:
         return f"{self.name}, {self.sell_in}, {self.quality}"
 
 
 class GildedRose:
-    ITEMS_LEGENDARY: set[str] = {"Sulfuras, Hand of Ragnaros"}
-    ITEMS_QUALITY_ENHANCED_ON_DEGRADE: set[str] = {
-        "Backstage passes to a TAFKAL80ETC concert"
-    }
-    ITEMS_QUALITY_ONLY_UP_ON_DEGRADE: set[str] = {"Aged Brie"}
-    items_no_degrade: set[str] = set.union(
-        ITEMS_QUALITY_ONLY_UP_ON_DEGRADE,
-        ITEMS_LEGENDARY,
-        ITEMS_QUALITY_ENHANCED_ON_DEGRADE,
-    )
-
     def __init__(self, items: list[Item]) -> None:
         self.items = items
 
     def _item_is_expired(self, item: Item) -> None:
-        if item.name in self.ITEMS_QUALITY_ONLY_UP_ON_DEGRADE and item.quality < 50:
+        if item.quality_up_on_degrade and item.quality < 50:
             item.quality += 1
-        elif item.name in self.ITEMS_QUALITY_ENHANCED_ON_DEGRADE:
+        elif item.quality_enhanced_near_expiration:
             item.quality = 0
-        elif item.name not in self.items_no_degrade and item.quality > 0:
+        elif not item.quality_no_degrade and item.quality > 0:
             item.quality = item.quality - 1
 
     def _item_update_sell_in(self, item: Item) -> None:
-        if item.name not in self.ITEMS_LEGENDARY:
+        if not item.quality_sell_in_locked:
             item.sell_in = item.sell_in - 1
 
     def _item_update_quality(self, item: Item) -> None:
-        if item.name not in self.items_no_degrade:
+        if not item.quality_no_degrade:
             if item.quality > 0:
                 item.quality = item.quality - 1
         elif item.quality < 50:
             item.quality = item.quality + 1
-            if item.name in self.ITEMS_QUALITY_ENHANCED_ON_DEGRADE:
+            if item.quality_enhanced_near_expiration:
                 if item.sell_in < 11 and item.quality < 50:
                     item.quality = item.quality + 1
                 if item.sell_in < 6 and item.quality < 50:
