@@ -1,6 +1,6 @@
 from src.gilded_rose.gilded_rose import GildedRose, Item
 
-if __name__=="__main__":
+if __name__ == "__main__":
     print("OMGHAI!")
     items = [
         Item(name="+5 Dexterity Vest", sell_in=10, quality=20),

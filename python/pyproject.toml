@@ -42,8 +42,7 @@ ignore = [
 ]
 [tool.pytest.ini_options]
 pythonpath = [
-  "src",
-  "src/gilded_rose",
+  "gilded_rose",
   "."
 ]
 [tool.pyright]

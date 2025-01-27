@@ -1,6 +1,6 @@
 import pytest
 
-from src.gilded_rose.gilded_rose import GildedRose, Item
+from gilded_rose.gilded_rose import GildedRose, Item
 
 
 @pytest.fixture

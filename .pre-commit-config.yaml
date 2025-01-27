@@ -17,5 +17,15 @@ repos:
     hooks:
       # Run the linter.
       - id: ruff
+        entry: ruff check
       # Run the formatter.
       - id: ruff-format
+
+  - repo: local
+    hooks:
+      - id: pytest-check
+        name: pytest
+        entry: uvx pytest
+        language: system
+        pass_filenames: false
+        always_run: true
