@@ -11,9 +11,8 @@ class Item:
     quality_no_degrade: bool = False
     quality_enhanced_near_expiration: bool = False
     quality_sell_in_locked: bool = False
-    quality_variaton_units:int = -1
+    quality_variaton_units: int = -1
     is_expired: bool = False
-    
 
     def __init__(self, name: str, sell_in: int, quality: int) -> None:
         self.name = name
@@ -47,6 +46,7 @@ class Item:
 
 class GildedRose:
     MAX_ITEM_QUALITY = 50
+
     def __init__(self, items: list[Item]) -> None:
         self.items = items
 
