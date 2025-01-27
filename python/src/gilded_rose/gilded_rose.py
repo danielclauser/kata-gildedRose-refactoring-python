@@ -65,14 +65,14 @@ class GildedRose:
     def _item_update_quality(self, item: Item) -> None:
         if not item.quality_no_degrade:
             if item.quality > 0:
-                item.quality -= 1
+                item.quality += item.quality_variaton_units
         elif item.quality < 50:
-            item.quality += 1
+            item.quality += item.quality_variaton_units
             if item.quality_enhanced_near_expiration:
                 if item.sell_in < 11 and item.quality < 50:
-                    item.quality += 1
+                    item.quality += item.quality_variaton_units
                 if item.sell_in < 6 and item.quality < 50:
-                    item.quality += 1
+                    item.quality += item.quality_variaton_units
 
     def run_items_day_passed_event(self) -> None:
         for item in self.items:
