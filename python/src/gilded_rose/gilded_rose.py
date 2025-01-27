@@ -1,9 +1,9 @@
 class Item:
-    ITEMS_QUALITY_ONLY_UP_ON_DEGRADE: set[str] = {"Aged Brie"}
-    ITEMS_LEGENDARY: set[str] = {"Sulfuras, Hand of Ragnaros"}
-    ITEMS_QUALITY_ENHANCED_ON_DEGRADE: set[str] = {
+    QUALITY_ONLY_UP_ON_DEGRADE: set[str] = {"Aged Brie"}
+    QUALITY_ENHANCED_ON_DEGRADE: set[str] = {
         "Backstage passes to a TAFKAL80ETC concert"
     }
+    QUALITY_SELL_IN_LOCKED: set[str] = {"Sulfuras, Hand of Ragnaros"}
     name: str
     sell_in: int
     quality: int
@@ -19,11 +19,11 @@ class Item:
         self.quality = quality
 
     def _set_info_item_by_name(self):
-        if self.name in self.ITEMS_QUALITY_ONLY_UP_ON_DEGRADE:
+        if self.name in self.QUALITY_ONLY_UP_ON_DEGRADE:
             self.quality_up_on_degrade = True
-        if self.name in self.ITEMS_LEGENDARY:
+        if self.name in self.QUALITY_SELL_IN_LOCKED:
             self.quality_sell_in_locked = True
-        if self.name in self.ITEMS_QUALITY_ENHANCED_ON_DEGRADE:
+        if self.name in self.QUALITY_ENHANCED_ON_DEGRADE:
             self.quality_enhanced_near_expiration = True
         if (
             self.quality_enhanced_near_expiration
