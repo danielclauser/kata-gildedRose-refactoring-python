@@ -11,6 +11,7 @@ version = "0.1"
 dependencies = [
     "approvaltests>=14.3.0",
     "coverage>=7.6.10",
+    "pre-commit>=4.1.0",
     "pytest",
     "ruff>=0.9.3",
 ]
