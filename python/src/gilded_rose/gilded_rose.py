@@ -1,10 +1,14 @@
 class GildedRose:
-    ITEMS_LEGENDARY = {"Sulfuras, Hand of Ragnaros"}
-    ITEMS_QUALITY_ENHANCED_ON_DEGRADE = {"Backstage passes to a TAFKAL80ETC concert"}
-    ITEMS_QUALITY_ONLY_UP_ON_DEGRADE = {"Aged Brie"}
-    items_no_degrade = ITEMS_QUALITY_ONLY_UP_ON_DEGRADE
-    items_no_degrade = items_no_degrade.union(ITEMS_LEGENDARY)
-    items_no_degrade = items_no_degrade.union(ITEMS_QUALITY_ENHANCED_ON_DEGRADE)
+    ITEMS_LEGENDARY: set[str] = {"Sulfuras, Hand of Ragnaros"}
+    ITEMS_QUALITY_ENHANCED_ON_DEGRADE: set[str] = {
+        "Backstage passes to a TAFKAL80ETC concert"
+    }
+    ITEMS_QUALITY_ONLY_UP_ON_DEGRADE: set[str] = {"Aged Brie"}
+    items_no_degrade: set[str] = set.union(
+        ITEMS_QUALITY_ONLY_UP_ON_DEGRADE,
+        ITEMS_LEGENDARY,
+        ITEMS_QUALITY_ENHANCED_ON_DEGRADE,
+    )
 
     def __init__(self, items):
         self.items = items
