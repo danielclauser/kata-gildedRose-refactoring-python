@@ -61,7 +61,7 @@ class GildedRose:
 
     def _item_is_expired(self, item: Item) -> None:
         if item.check_is_expired():
-            if item.quality < self.MAX_ITEM_QUALITY and item.quality > 0:
+            if 0 < item.quality < self.MAX_ITEM_QUALITY:
                 item.quality += item.quality_variaton_units
             elif item.sell_in_set_zero_when_expired:
                 item.quality = 0
