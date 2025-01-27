@@ -24,14 +24,12 @@ class GildedRose:
         self.items = items
 
     def _item_is_expired(self, item: Item) -> None:
-        if item.name not in self.ITEMS_QUALITY_ONLY_UP_ON_DEGRADE:
-            if item.name not in self.ITEMS_QUALITY_ENHANCED_ON_DEGRADE:
-                if item.quality > 0 and item.name not in self.ITEMS_LEGENDARY:
-                    item.quality = item.quality - 1
-            else:
-                item.quality = item.quality - item.quality
-        elif item.quality < 50:
-            item.quality = item.quality + 1
+        if item.name in self.ITEMS_QUALITY_ONLY_UP_ON_DEGRADE and item.quality < 50:
+            item.quality += 1
+        elif item.name in self.ITEMS_QUALITY_ENHANCED_ON_DEGRADE:
+            item.quality = 0
+        elif item.name not in self.items_no_degrade and item.quality > 0:
+            item.quality = item.quality - 1
 
     def _item_update_sell_in(self, item: Item) -> None:
         if item.name not in self.ITEMS_LEGENDARY:
