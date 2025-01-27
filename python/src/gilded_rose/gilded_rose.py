@@ -40,4 +40,4 @@ class Item:
         self.quality = quality
 
     def __repr__(self):
-        return f"{self.name}, {self.sellin}, {self.quality}"
+        return f"{self.name}, {self.sell_in}, {self.quality}"
