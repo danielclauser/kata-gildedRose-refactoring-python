@@ -25,4 +25,4 @@ if __name__ == "__main__":
         for item in items:
             print(item)
         print("")
-        GildedRose(items).run_item_day_passed_event()
+        GildedRose(items).run_items_day_passed_event()

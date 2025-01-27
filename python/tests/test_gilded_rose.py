@@ -48,6 +48,28 @@ def test_validate_inventory1_day_0(
 @pytest.mark.parametrize(
     "id_item, sellin, quality",
     [
+        (0, 9, 19),
+        (1, 1, 1),
+        (2, 4, 6),
+        (3, 0, 80),
+        (4, -1, 80),
+        (5, 14, 19),
+        (6, 9, 47),
+        (7, 4, 46),
+        (8, 2, 4),
+    ],
+)
+def test_validate_inventory1_after_1_day(
+    mock_gilded_rose_inventory1, id_item, sellin, quality
+):
+    mock_gilded_rose_inventory1.run_items_day_passed_event()
+    assert mock_gilded_rose_inventory1.items[id_item].sell_in == sellin
+    assert mock_gilded_rose_inventory1.items[id_item].quality == quality
+
+
+@pytest.mark.parametrize(
+    "id_item, sellin, quality",
+    [
         (0, -20, 0),
         (1, -28, 50),
         (2, -25, 0),

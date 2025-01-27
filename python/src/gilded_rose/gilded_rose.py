@@ -4,9 +4,10 @@ class Item:
         "Backstage passes to a TAFKAL80ETC concert"
     }
     QUALITY_SELL_IN_LOCKED: set[str] = {"Sulfuras, Hand of Ragnaros"}
+    QUALITY_DOUBLE_VARIATION: set[str] = {"Conjured Mana Cake"}
     name: str
     sell_in: int
-    sell_in_variation_units:int = -1
+    sell_in_variation_units: int = -1
     quality: int
     quality_up_on_degrade: bool = False
     quality_no_degrade: bool = False
@@ -29,6 +30,8 @@ class Item:
             self.quality_sell_in_locked = True
         if self.name in self.QUALITY_ENHANCED_ON_DEGRADE:
             self.quality_enhanced_near_expiration = True
+        if self.name in self.QUALITY_DOUBLE_VARIATION:
+            self.quality_variaton_units *= 2
         if (
             self.quality_enhanced_near_expiration
             or self.quality_up_on_degrade
